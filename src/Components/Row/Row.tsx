@@ -23,7 +23,7 @@ export const Row = ({title, uri}: RowProps) => {
 
   return (
     <div className="row">
-      <h3 className="title">{title}</h3>
+      <h2 className="rowTitle">{title}</h2>
       <div className="posters">
         {movies.map(movie => <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={`${movie.id}`} key={movie.id} className='img' />)}
       </div>
