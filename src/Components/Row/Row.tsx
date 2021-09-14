@@ -8,11 +8,13 @@ import { RowProps } from '../Types'
 export const Row = ({title, uri}: RowProps) => {
 
   const [movies, setMovies] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await axios.get(uri)
+        setLoading(false)
         setMovies(data.data.results)
       } catch (err) {
         console.log(err)  
@@ -20,6 +22,12 @@ export const Row = ({title, uri}: RowProps) => {
     }
     fetchData();
   }, [uri])
+
+  if (loading) {
+    return (
+      <div>Loading</div>
+    )
+  }
 
   return (
     <div className="row">
