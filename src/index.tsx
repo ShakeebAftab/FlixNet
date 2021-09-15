@@ -1,11 +1,17 @@
-import React from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './Components/App/App';
+import App from './Components/App';
+
+import '@fontsource/roboto';
+import { CssBaseline, ThemeProvider } from '@material-ui/core';
+import { theme } from './Theme/Theme';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <StrictMode>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
+  </StrictMode>,
   document.getElementById('root')
 );

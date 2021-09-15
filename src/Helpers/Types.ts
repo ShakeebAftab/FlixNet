@@ -22,3 +22,7 @@ export type MovieType = {
   name?: string,
   original_name?: string
 }
+
+export type LoaderProps = {
+  height: string
+}
