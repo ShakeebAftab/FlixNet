@@ -1,11 +1,12 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { FetchURIs } from '../../Helpers/FetchURIs'
+import { MovieType } from '../Types'
 import './Header.css'
 
-export const Header = (props: any) => {
+export const Header = () => {
 
-  const [movie, setMovie] = useState<any>({})
+  const [movie, setMovie] = useState<MovieType | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,6 +20,14 @@ export const Header = (props: any) => {
     fetchData()
   }, [])
 
+  if (!movie) {
+    return (
+      <div>
+        Loading
+      </div>
+    )
+  }
+
   return (
     <header className='container' style={{
       backgroundImage: `url("https://image.tmdb.org/t/p/original/${movie?.backdrop_path}")`,
@@ -26,7 +35,7 @@ export const Header = (props: any) => {
       backgroundPosition: 'center center'
     }}>
       <div className="content">
-        <h1 className='title'>{movie?.name || movie?.title || movie?.original_name}</h1>
+        <h1 className='title'>{movie?.name || movie?.title || movie?.original_name || movie?.original_title}</h1>
         <div className="buttons">
           <button className="button">Play</button>
           <button className="button">My List</button>

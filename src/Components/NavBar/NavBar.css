@@ -16,11 +16,12 @@
 
 .logo {
   object-fit: contain;
-  width: 130px;
+  width: 120px;
+  margin-left: 3%;
 }
 
 .profile {
   object-fit: contain;
-  width: 40px;
-  padding-right: 20px;
+  width: 30px;
+  margin-right: 3%;
 }

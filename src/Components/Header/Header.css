@@ -13,7 +13,7 @@
 }
 
 .title {
-  font-size: 3rem;
+  font-size: 2em;
   font-weight: 800;
   padding-bottom: 0.5rem;
 }
@@ -48,14 +48,14 @@
 }
 
 .bottomFadeout {
-  height: 13rem;
+  height: 16em;
   background-image: linear-gradient(180deg, transparent, rgba(27, 27, 27, 0.61),#111);
 }
 
 @media screen and (max-width: 786px) {
   .content {
     margin-left: 10%;
-    padding-top: 35%;
+    padding-top: 15%;
     height: 30vh;
   }
   .desc {
@@ -63,6 +63,21 @@
     font-size: 0.8rem;
   }
   .bottomFadeout {
-    height: 16.7rem;
+    height: 22rem;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .content {
+    margin-left: 10%;
+    padding-top: 15%;
+    height: 30vh;
+  }
+  .desc {
+    max-width: 70%;
+    font-size: 0.8rem;
+  }
+  .bottomFadeout {
+    height: 24rem;
   }
 }
