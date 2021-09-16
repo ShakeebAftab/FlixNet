@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { MovieType } from '../Helpers/Types'
+import { HeaderProps, MovieType } from '../Helpers/Types'
 import { FetchURIs } from '../Helpers/FetchURIs'
 import { Box, Button, Container, makeStyles, Typography, Grid, useMediaQuery, useTheme } from '@material-ui/core'
 import { Loader } from './Loader'
@@ -42,7 +42,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-export const Header = () => {
+export const Header = ({ type }: HeaderProps) => {
 
   const classes = useStyles()
   const [movie, setMovie] = useState<MovieType | null>(null)
@@ -55,7 +55,8 @@ export const Header = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await axios.get(FetchURIs[0].uri)
+        const idx = FetchURIs.findIndex((uri) => uri.route === type)
+        const data = await axios.get(FetchURIs[idx].uri)
         setMovie(data.data.results[Math.floor(Math.random() * data.data.results.length - 1)])
         setLoading(false)
       } catch (err) {
@@ -63,7 +64,7 @@ export const Header = () => {
       }
     }  
     fetchData()
-  }, [])
+  }, [type])
 
   if (loading) return <Loader height='80vh' />
 

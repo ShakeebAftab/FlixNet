@@ -1,16 +1,22 @@
 import { StrictMode } from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import App from './Components/App';
 
+// Material UI
 import '@fontsource/roboto';
 import { CssBaseline, ThemeProvider } from '@material-ui/core';
 import { theme } from './Theme/Theme';
 
-ReactDOM.render(
+// React Router
+import { BrowserRouter } from 'react-router-dom';
+
+render(
   <StrictMode>
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
+      <BrowserRouter>
+        <CssBaseline />
+        <App />
+      </BrowserRouter>
     </ThemeProvider>
   </StrictMode>,
   document.getElementById('root')

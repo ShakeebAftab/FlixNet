@@ -1,3 +1,5 @@
+import { RouteComponentProps } from "react-router"
+
 export type RowProps = {
   title: string,
   uri: string,
@@ -26,3 +28,9 @@ export type MovieType = {
 export type LoaderProps = {
   height: string
 }
+
+export type HeaderProps = {
+  type: string
+}
+
+export interface CategoryProps extends RouteComponentProps<{ type: string }> {}

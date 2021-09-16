@@ -1,17 +1,17 @@
-import { FetchURIs } from '../Helpers/FetchURIs';
-import { Header } from './Header';
-import { NavBar } from './NavBar';
-import { Row } from './Row';
-import { RowProps } from '../Helpers/Types';
-import { Box } from '@material-ui/core';
+import { Route, Switch } from 'react-router';
+import { Category } from './Category';
+import { Home } from './Home';
+import { NavBar } from "./NavBar"
 
 const App = () => {
   return (
-    <Box overflow='hidden'>
+    <>
       <NavBar />
-      <Header />
-      {FetchURIs.map((({ title, uri }: RowProps) => <Row title={title} uri={uri} key={title} />))}
-    </Box>
+      <Switch>
+        <Route path='/' component={Home} exact/>
+        <Route path='/category/:type' component={Category} exact />
+      </Switch>
+    </>
   );
 }
 

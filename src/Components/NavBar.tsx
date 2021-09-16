@@ -8,6 +8,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 // Icon Imports
 import { ArrowUpward, Airplay, TrendingUp, Deck, Assignment, ChevronLeft, ChevronRight, Menu, HomeRounded, DirectionsRun, EmojiEmotions, EmojiPeople } from '@material-ui/icons';
+import { useHistory } from 'react-router';
 
 // Asset Import
 import logo from '../Static/logo.png'
@@ -91,6 +92,14 @@ export const NavBar = () => {
   const handleDrawerClose = () => setOpen(false);
 
   const [show, setShow] = useState(false)
+  const history = useHistory()
+
+  const onListItemClick = (text: string) => {
+    setActive(text)
+    setOpen(false)
+    if (text === 'home') return history.push(`/`) 
+    history.push(`/category/${text.toLowerCase()}`)
+  }
 
   useEffect(() => {
     window.addEventListener('scroll', () => setShow(window.scrollY > 170 ? true : false))
@@ -103,41 +112,49 @@ export const NavBar = () => {
       text: 'Trending Now',
       icon: <TrendingUp className={classes.listItem} />,
       activeIcon: <TrendingUp color='secondary' />,
+      route: 'trending'
     },
     {
       text: 'Netflix Originals',
       icon: <Airplay className={classes.listItem} />,
       activeIcon: <Airplay color='secondary' />,
+      route: 'originals'
     },
     {
       text: 'Top Rated',
       icon: <ArrowUpward className={classes.listItem} />,
       activeIcon: <ArrowUpward color='secondary' />,
+      route: 'toprated'
     },
     {
       text: 'Action',
       icon: <DirectionsRun className={classes.listItem} />,
       activeIcon: <DirectionsRun color='secondary' />,
+      route: 'action'
     },
     {
       text: 'Comedy',
       icon: <EmojiEmotions className={classes.listItem} />,
       activeIcon: <EmojiEmotions color='secondary' />,
+      route: 'comedy'
     },
     {
       text: 'Horror',
       icon: <EmojiPeople className={classes.listItem} />,
       activeIcon: <EmojiPeople color='secondary' />,
+      route: 'horror'
     },
     {
       text: 'Romance',
       icon: <Deck className={classes.listItem} />,
       activeIcon: <Deck color='secondary' />,
+      route: 'romance'
     },
     {
       text: 'Documentaries',
       icon: <Assignment className={classes.listItem} />,
       activeIcon: <Assignment color='secondary' />,
+      route: 'documentaries',
     }
   ]
 
@@ -161,7 +178,7 @@ export const NavBar = () => {
           >
             <Menu />
           </IconButton>
-          <img src={logo} alt="logo" className={classes.logo} />
+          <img src={logo} alt="logo" className={classes.logo} onClick={() => onListItemClick('home')} />
       </Toolbar>
     </AppBar>
     <Drawer
@@ -175,23 +192,23 @@ export const NavBar = () => {
         }}
       >
         <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={() => handleDrawerClose()}>
             {theme.direction === 'ltr' ? <ChevronLeft color='secondary' /> : <ChevronRight color='secondary' />}
           </IconButton>
         </div>
         <Divider />
         <List>
-            <ListItem button key={'Home'} className={classes.listItem} onClick={() => setActive('home')}>
+            <ListItem button key={'Home'} className={classes.listItem} onClick={() => onListItemClick('home')}>
               <ListItemIcon>{active === 'home' ? <HomeRounded color='secondary' /> : <HomeRounded className={classes.listItem} />}</ListItemIcon>
               <ListItemText primary={'Home'} className={active === 'home' ? classes.active : undefined} />
             </ListItem>
         </List>
         <Divider />
         <List className={classes.listItem}>
-          {MenuOpts.map(({text, icon, activeIcon}) => (
-            <ListItem button key={text} onClick={() => setActive(text)}>
-              <ListItemIcon>{active === text ? activeIcon : icon}</ListItemIcon>
-              <ListItemText primary={text} className={active === text ? classes.active : undefined}/>
+          {MenuOpts.map(({text, icon, activeIcon, route}) => (
+            <ListItem button key={text} onClick={() => onListItemClick(route)}>
+              <ListItemIcon>{active === route ? activeIcon : icon}</ListItemIcon>
+              <ListItemText primary={text} className={active === route ? classes.active : undefined}/>
             </ListItem>
           ))}
         </List>
