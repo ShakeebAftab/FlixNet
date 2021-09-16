@@ -12,7 +12,7 @@ export const FetchURIs = [
     uri: `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_APIKEY}&language=en-US`
   },
   {
-    title: `Action Movie`,
+    title: `Action Movies`,
     uri: `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_APIKEY}&with_genres=28`
   },
   {

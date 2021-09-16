@@ -7,6 +7,9 @@ export const theme = createTheme({
     },
     text: {
       primary: '#FFFFFF'
+    },
+    primary: {
+      main: '#000000'
     }
   },
   overrides: {

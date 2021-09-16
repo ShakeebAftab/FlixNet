@@ -1,6 +1,6 @@
 import { FetchURIs } from '../Helpers/FetchURIs';
 import { Header } from './Header';
-import { NavBar } from './NavBar/NavBar';
+import { NavBar } from './NavBar';
 import { Row } from './Row';
 import { RowProps } from '../Helpers/Types';
 import { Box } from '@material-ui/core';
