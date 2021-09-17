@@ -1,11 +1,13 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { makeStyles } from '@material-ui/styles'
+import { Box, Typography } from '@material-ui/core'
+import movieTrailer from 'movie-trailer'
+import { Loader } from './Loader'
 
 // Types
 import { MovieType, RowProps } from '../Helpers/Types'
-import { makeStyles } from '@material-ui/styles'
-import { Box, Typography } from '@material-ui/core'
-import { Loader } from './Loader'
+import { Movie } from './Movie'
 
 const useStyles = makeStyles(() => ({
   title: {
@@ -37,9 +39,21 @@ const useStyles = makeStyles(() => ({
 
 export const Row = ({title, uri}: RowProps) => {
 
-  const [movies, setMovies] = useState<MovieType[] | null>(null)
-
   const classes = useStyles()
+  const [movies, setMovies] = useState<MovieType[] | null>(null)
+  const [youtubeId, setYoutubeId] = useState<string | null>('')
+  const [open, setOpen] = useState(false)
+
+  const handlePosterClick = async (movie: MovieType) => {
+    try {
+      const url = await movieTrailer(movie.name || movie.original_name || movie.original_title || movie.title || '')
+      const params = new URLSearchParams(new URL(url).searchParams)
+      setYoutubeId(params.get('v'))
+      setOpen(true)
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,8 +75,9 @@ export const Row = ({title, uri}: RowProps) => {
         {title}
       </Typography>
       <Box className={classes.posters}>
-        {movies?.map(movie => <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={`${movie.id}`} key={movie.id} className={classes.img} />)}
+        {movies?.map(movie => <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={`${movie.id}`} key={movie.id} className={classes.img} onClick={() => handlePosterClick(movie)} />)}
       </Box>
+      {open && <Movie id={youtubeId ? youtubeId : ''} open={open} setOpen={setOpen} />}
     </Box>
   )
 }

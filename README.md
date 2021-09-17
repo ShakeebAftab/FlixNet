@@ -1,3 +1,3 @@
 ## FlixNet
 
-A netflix clone but with a twist
+A netflix clone but with a twist.

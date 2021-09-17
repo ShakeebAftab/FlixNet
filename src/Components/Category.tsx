@@ -2,10 +2,12 @@ import { Box, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 import axios from "axios"
 import { useCallback, useEffect, useRef, useState } from "react"
-import { FetchURIs } from "src/Helpers/FetchURIs"
+import { FetchURIs } from "../Helpers/FetchURIs"
 import { CategoryProps, MovieType } from "../Helpers/Types"
 import { Header } from "./Header"
 import { Loader } from "./Loader"
+import movieTrailer from 'movie-trailer'
+import { Movie } from "./Movie"
 
 const useStyles = makeStyles(() => ({
   posters: {
@@ -42,6 +44,20 @@ export const Category = ({ match }: CategoryProps) => {
     if (node) observer.current.observe(node)
   }, [loading])
 
+  const [youtubeId, setYoutubeId] = useState<string | null>('')
+  const [open, setOpen] = useState(false)
+
+  const handlePosterClick = async (movie: MovieType) => {
+    try {
+      const url = await movieTrailer(movie.name || movie.original_name || movie.original_title || movie.title || '')
+      const params = new URLSearchParams(new URL(url).searchParams)
+      setYoutubeId(params.get('v'))
+      setOpen(true)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   useEffect(() => {
     const fetchData = async() => {
       const idx = FetchURIs.findIndex((uri) => uri.route === match.params.type)
@@ -52,8 +68,6 @@ export const Category = ({ match }: CategoryProps) => {
     fetchData()
   }, [match, page])
 
-
-
   return (
     <Box overflow='hidden'>
       <Header type={match.params.type} />
@@ -62,14 +76,15 @@ export const Category = ({ match }: CategoryProps) => {
           {loading ? <Loader height='100%' /> : movies?.map((movie, idx) => (
             movies.length - 1 === idx ? 
             <Grid item key={`${movie.id}:${idx}`} ref={lastPoster} >
-              <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={`${movie.id}`} className={classes.img} />
+              <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={`${movie.id}`} className={classes.img} onClick={() => handlePosterClick(movie)} />
             </Grid> :
             <Grid item key={`${movie.id}:${idx}`} >
-              <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={`${movie.id}`} className={classes.img} />
+              <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={`${movie.id}`} className={classes.img} onClick={() => handlePosterClick(movie)} />
             </Grid>
           ))}
         </Grid>
       </Box>
+      {open && <Movie id={youtubeId ? youtubeId : ''} open={open} setOpen={setOpen} />}
     </Box>
   )
 }

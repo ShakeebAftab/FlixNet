@@ -33,4 +33,10 @@ export type HeaderProps = {
   type: string
 }
 
+export type MovieProps = {
+  id: string,
+  open: boolean,
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
 export interface CategoryProps extends RouteComponentProps<{ type: string }> {}
