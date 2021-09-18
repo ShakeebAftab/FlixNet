@@ -1,13 +1,13 @@
+import { useCallback, useEffect, useRef, useState } from "react"
 import { Box, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 import axios from "axios"
-import { useCallback, useEffect, useRef, useState } from "react"
 import { FetchURIs } from "../Helpers/FetchURIs"
 import { CategoryProps, MovieType } from "../Helpers/Types"
 import { Header } from "./Header"
 import { Loader } from "./Loader"
-import movieTrailer from 'movie-trailer'
 import { Movie } from "./Movie"
+import { Poster } from "./Poster"
 
 const useStyles = makeStyles(() => ({
   posters: {
@@ -17,16 +17,6 @@ const useStyles = makeStyles(() => ({
     alignItems: 'center',
     alignContent: 'center'
   },
-  img: {
-    objectFit: 'contain',
-    width: '130px',
-    maxHeight: '200px',
-    margin: '10px',
-    transition: '700ms',
-    '&:hover': {
-      transform: 'scale(1.08)'
-    }
-  }
 }))
 
 export const Category = ({ match }: CategoryProps) => {
@@ -45,18 +35,7 @@ export const Category = ({ match }: CategoryProps) => {
   }, [loading])
 
   const [youtubeId, setYoutubeId] = useState<string | null>('')
-  const [open, setOpen] = useState(false)
-
-  const handlePosterClick = async (movie: MovieType) => {
-    try {
-      const url = await movieTrailer(movie.name || movie.original_name || movie.original_title || movie.title || '')
-      const params = new URLSearchParams(new URL(url).searchParams)
-      setYoutubeId(params.get('v'))
-      setOpen(true)
-    } catch (err) {
-      console.log(err)
-    }
-  }
+  const [open, setOpen] = useState(false) 
 
   useEffect(() => {
     const fetchData = async() => {
@@ -76,10 +55,10 @@ export const Category = ({ match }: CategoryProps) => {
           {loading ? <Loader height='100%' /> : movies?.map((movie, idx) => (
             movies.length - 1 === idx ? 
             <Grid item key={`${movie.id}:${idx}`} ref={lastPoster} >
-              <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={`${movie.id}`} className={classes.img} onClick={() => handlePosterClick(movie)} />
+              <Poster movie={movie} large={false} setOpen={setOpen} setYoutubeId={setYoutubeId}/>
             </Grid> :
             <Grid item key={`${movie.id}:${idx}`} >
-              <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={`${movie.id}`} className={classes.img} onClick={() => handlePosterClick(movie)} />
+              <Poster movie={movie} large={false} setOpen={setOpen} setYoutubeId={setYoutubeId}/>
             </Grid>
           ))}
         </Grid>

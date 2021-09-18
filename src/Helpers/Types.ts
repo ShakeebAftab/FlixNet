@@ -39,4 +39,11 @@ export type MovieProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
+export interface PosterProps {
+  movie: MovieType,
+  large: boolean
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  setYoutubeId: React.Dispatch<React.SetStateAction<string | null>>
+}
+
 export interface CategoryProps extends RouteComponentProps<{ type: string }> {}
