@@ -53,7 +53,7 @@ export const Row = ({title, uri}: RowProps) => {
         {title}
       </Typography>
       <Box className={classes.posters}>
-        {movies?.map(movie => <Poster movie={movie} setOpen={setOpen} setYoutubeId={setYoutubeId} large />)}
+        {movies?.map(movie => <Poster movie={movie} setOpen={setOpen} setYoutubeId={setYoutubeId} large key={`${movie.id}`}/>)}
       </Box>
       {open && <Movie id={youtubeId ? youtubeId : ''} open={open} setOpen={setOpen} />}
     </Box>

@@ -67,7 +67,8 @@ export const NavBar = () => {
   }, [])
 
   useEffect(() => {
-    setActive(window.location.pathname.substr(window.location.pathname.lastIndexOf('/')+1) === '' ? 'home' : window.location.pathname.substr(window.location.pathname.lastIndexOf('/')+1))
+    console.log(window.location.pathname.substr(window.location.pathname.lastIndexOf('/')+1).length)
+    setActive(window.location.pathname.substr(window.location.pathname.lastIndexOf('/')+1).length === 0 ? 'home' : window.location.pathname.substr(window.location.pathname.lastIndexOf('/')+1))
   }, [])
 
   return (
