@@ -66,6 +66,10 @@ export const NavBar = () => {
     return () => window.removeEventListener('scroll', () => {})
   }, [])
 
+  useEffect(() => {
+    setActive(window.location.pathname.substr(window.location.pathname.lastIndexOf('/')+1))
+  }, [])
+
   return (
     <div className={classes.root}>
       <AppBar
