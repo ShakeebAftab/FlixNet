@@ -1,7 +1,7 @@
 import { Route, Switch } from 'react-router';
 import { Category } from './Category';
 import { Home } from './Home';
-import { NavBar } from "./NavBar"
+import { NavBar } from "./NavBar/NavBar"
 
 const App = () => {
   return (

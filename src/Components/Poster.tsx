@@ -28,5 +28,5 @@ export const Poster = ({ movie, large, setOpen, setYoutubeId }: PosterProps) => 
   }
 
   const classes = useStyles()
-  return <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={`${movie.id}`} className={classes.img} style={{maxHeight: (large ? '230px' : '200px'), width: (large ? '100%' : '130px')}} onClick={() => handlePosterClick(movie)} />
+  return <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={`${movie.id}`} className={classes.img} style={{maxHeight: (large ? '230px' : '200px'), width: (large ? '100%' : '130px'), marginTop: (large ? '' : '10px')}} onClick={() => handlePosterClick(movie)} />
 }
