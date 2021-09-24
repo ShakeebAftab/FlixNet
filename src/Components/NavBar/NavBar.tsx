@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { Toolbar, AppBar, makeStyles } from '@material-ui/core';
+import { Toolbar, AppBar, makeStyles, useScrollTrigger } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 
 // Icon Imports
@@ -53,6 +53,7 @@ export const NavBar = () => {
   const [active, setActive] = useState('home')
   const [show, setShow] = useState(false)
   const history = useHistory()
+  const scrollTrigger = useScrollTrigger()
 
   const onListItemClick = (text: string) => {
     setActive(text)
@@ -62,14 +63,9 @@ export const NavBar = () => {
   }
 
   useEffect(() => {
-    window.addEventListener('scroll', () => setShow(window.scrollY > 170 ? true : false))
-    return () => window.removeEventListener('scroll', () => {})
-  }, [])
-
-  useEffect(() => {
-    console.log(window.location.pathname.substr(window.location.pathname.lastIndexOf('/')+1).length)
     setActive(window.location.pathname.substr(window.location.pathname.lastIndexOf('/')+1).length === 0 ? 'home' : window.location.pathname.substr(window.location.pathname.lastIndexOf('/')+1))
-  }, [])
+    setShow(scrollTrigger)
+  }, [scrollTrigger])
 
   return (
     <div className={classes.root}>
